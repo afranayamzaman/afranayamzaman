@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Menu</title>
+<title>Afran Ayam Zaman | Wood-Fired Menu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&family=Cairo:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#161a22;--panel:#1d222c;--ink:#efeae0;--muted:#a3a9b3;--line:#323946;--gold:#c9b27c}
 *{box-sizing:border-box;margin:0}
 html{scroll-behavior:smooth}
-body{font-family:Jost,system-ui,sans-serif;font-weight:300;background:var(--bg);color:var(--ink);line-height:1.6}
+body{font-family:Jost,Cairo,system-ui,sans-serif;font-weight:300;background:var(--bg);color:var(--ink);line-height:1.6}
 body.lock{overflow:hidden}
-h1,h2,h3,.price{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600}
+h1,h2,h3,.price{font-family:"Cormorant Garamond",Cairo,Georgia,serif;font-weight:600}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .wrap{max-width:900px;margin:0 auto;padding:0 20px}
 
 /* splash */
 #splash{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .7s,visibility .7s}
 #splash.gone{opacity:0;visibility:hidden}
-#splash .mark{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,9vw,4rem);letter-spacing:.5em;margin-right:-.5em;line-height:1.1;animation:rise 1.2s ease both}
+#splash .mark{font-family:Cairo,"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,9vw,3.8rem);letter-spacing:0;line-height:1.4;animation:rise 1.2s ease both}
 #splash .sub{color:var(--gold);letter-spacing:.3em;font-size:.8rem;margin:14px -.3em 34px 0;animation:rise 1.2s .25s ease both}
 .quick{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;animation:rise 1.2s .5s ease both}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -38,7 +38,7 @@ h1,h2,h3,.price{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600}
 .tile{position:relative;aspect-ratio:4/5;border:1px solid var(--line);background:var(--panel) center/cover no-repeat;color:var(--ink);cursor:pointer;display:flex;align-items:flex-end;padding:0;overflow:hidden;font:inherit;text-align:left}
 .tile::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(10,12,16,.88))}
 .tile .em{position:absolute;top:18px;left:0;right:0;text-align:center;font-size:3rem}
-.tile span.l{position:relative;padding:14px;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.35rem;width:100%}
+.tile span.l{position:relative;padding:14px;font-family:"Cormorant Garamond",Cairo,serif;font-weight:600;font-size:1.35rem;width:100%}
 .tile[aria-pressed=true]{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
 .search{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ink);font:inherit;padding:10px 2px;margin-bottom:6px}
 .search::placeholder{color:var(--muted)}
@@ -102,13 +102,13 @@ footer .quick{margin-top:22px}
 <script>
 /* ============ EDIT THIS SECTION ============ */
 const SHOP = {
-  name: "Afran Ayam Zaman على الحطب",
-  subtitle: "Fresh · Handmade · Daily",
-  tagline: "Made fresh every day. Choose a category, or search for a dish.",
+  nameAr: "أفران أيام زمان على الحطب",
+  nameEn: "Afran Ayam Zaman",
+  tagline: "Baked fresh on a real wood fire. Choose a category, or search for a dish.",
   hours: "Sunday – Thursday 11am – 11pm  |  Friday & Saturday 11am – 12am",
-  address: "Wadi Al Zaytouna, Abudis",
-  phone: "+970 59 8064129",
-  whatsapp: "+972 597916131",   // country code + number, no + or spaces
+  address: "Main Street, Nablus",
+  phone: "+970 59 000 0000",
+  whatsapp: "970590000000",   // country code + number, no + or spaces
   instagram: "",             // full link, or leave empty
   mapsLink: "",              // Google Maps link, or leave empty
   currency: "₪"
@@ -137,11 +137,10 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 let active = "All";
 
-document.title = SHOP.name + " – Menu";
-$("#sName").textContent = SHOP.name.toUpperCase().split("").join(" ").replace(/ {3,}/g," ");
-$("#sName").style.letterSpacing = ".3em";
-$("#sSub").textContent = SHOP.subtitle;
-$("#biz").textContent = SHOP.name;
+document.title = SHOP.nameEn + " | Wood-Fired Menu";
+$("#sName").textContent = SHOP.nameAr;
+$("#sSub").textContent = SHOP.nameEn.toUpperCase();
+$("#biz").textContent = SHOP.nameAr;
 $("#tagline").textContent = SHOP.tagline;
 $("#addr").textContent = SHOP.address;
 $("#hours").textContent = SHOP.hours;
@@ -183,8 +182,8 @@ function render(){
             ${i.image ? `<img src="${esc(i.image)}" alt="" loading="lazy">` : esc(i.emoji || "🍽️")}
           </button>
           <div class="txt">
-            <div class="row"><span class="name">${esc(i.name)}</span><span class="price">${esc(SHOP.currency)}${esc(i.price)}</span></div>
-            <p class="desc">${esc(i.desc)}</p>
+            <div class="row"><span class="name" dir="auto">${esc(i.name)}</span><span class="price">${esc(SHOP.currency)}${esc(i.price)}</span></div>
+            <p class="desc" dir="auto">${esc(i.desc)}</p>
             ${i.tag ? `<span class="tag">${esc(i.tag)}</span>` : ""}
           </div>
         </article>`).join("")}
