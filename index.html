@@ -1,27 +1,215 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My First GitHub Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      color: #333;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      color: #007bff;
-    }
-    p {
-      font-size: 18px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#161a22;--panel:#1d222c;--ink:#efeae0;--muted:#a3a9b3;--line:#323946;--gold:#c9b27c}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:Jost,system-ui,sans-serif;font-weight:300;background:var(--bg);color:var(--ink);line-height:1.6}
+body.lock{overflow:hidden}
+h1,h2,h3,.price{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+
+/* splash */
+#splash{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .7s,visibility .7s}
+#splash.gone{opacity:0;visibility:hidden}
+#splash .mark{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,9vw,4rem);letter-spacing:.5em;margin-right:-.5em;line-height:1.1;animation:rise 1.2s ease both}
+#splash .sub{color:var(--gold);letter-spacing:.3em;font-size:.8rem;margin:14px -.3em 34px 0;animation:rise 1.2s .25s ease both}
+.quick{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;animation:rise 1.2s .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.btn{display:inline-block;text-decoration:none;color:var(--ink);border:1px solid var(--gold);padding:11px 22px;font:400 .9rem Jost,sans-serif;letter-spacing:.08em;background:transparent;cursor:pointer;transition:background .2s,color .2s}
+.btn:hover{background:var(--gold);color:#161a22}
+.btn.solid{background:var(--gold);color:#161a22}
+#enter{margin-top:30px;border:0;border-bottom:1px solid var(--muted);color:var(--muted);padding:6px 2px;animation:rise 1.2s .75s ease both}
+
+/* hero */
+.hero{padding:70px 0 40px;text-align:center}
+.hero h1{font-size:clamp(2.4rem,8vw,4.2rem);line-height:1.05}
+.hero p{max-width:50ch;margin:16px auto 0;color:var(--muted)}
+
+/* category tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;padding:10px 0 20px}
+.tile{position:relative;aspect-ratio:4/5;border:1px solid var(--line);background:var(--panel) center/cover no-repeat;color:var(--ink);cursor:pointer;display:flex;align-items:flex-end;padding:0;overflow:hidden;font:inherit;text-align:left}
+.tile::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,rgba(10,12,16,.88))}
+.tile .em{position:absolute;top:18px;left:0;right:0;text-align:center;font-size:3rem}
+.tile span.l{position:relative;padding:14px;font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.35rem;width:100%}
+.tile[aria-pressed=true]{border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.search{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--ink);font:inherit;padding:10px 2px;margin-bottom:6px}
+.search::placeholder{color:var(--muted)}
+
+/* items */
+.cat h2{font-size:2rem;margin:38px 0 8px;scroll-margin-top:20px;padding-bottom:8px;border-bottom:1px solid var(--gold)}
+.item{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.thumb{flex:none;width:88px;height:88px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;font-size:2.3rem;overflow:hidden;cursor:zoom-in;padding:0;color:inherit}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.txt{flex:1;min-width:0}
+.row{display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+.name{font-weight:500;font-size:1.08rem}
+.price{color:var(--gold);font-size:1.3rem;white-space:nowrap}
+.desc{color:var(--muted);font-size:.93rem}
+.tag{font-size:.78rem;color:var(--gold);border:1px solid var(--gold);padding:1px 9px;display:inline-block;margin-top:6px}
+.empty{text-align:center;color:var(--muted);padding:40px 0}
+
+/* footer */
+footer{margin-top:50px;background:var(--panel);border-top:1px solid var(--line);padding:46px 0 60px;text-align:center}
+footer h2{font-size:1.9rem;margin-bottom:8px}
+footer p{color:var(--muted)}
+footer .quick{margin-top:22px}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(8,10,14,.92);display:none;place-items:center;padding:20px;text-align:center}
+.lb.open{display:grid}
+.lb img{max-width:92vw;max-height:72vh}
+.lb .big{font-size:7rem}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
 </head>
-<body>
-  <h1>Hello, GitHub!</h1>
-  <p>My first website is live on GitHub Pages.</p>
+<body class="lock">
+
+<div id="splash">
+  <div class="mark" id="sName"></div>
+  <div class="sub" id="sSub"></div>
+  <div class="quick" id="sQuick"></div>
+  <button class="btn" id="enter">View menu</button>
+</div>
+
+<header class="hero wrap">
+  <h1 id="biz"></h1>
+  <p id="tagline"></p>
+</header>
+
+<main class="wrap" id="top">
+  <div class="tiles" id="tiles"></div>
+  <input class="search" id="q" type="search" placeholder="Search the menu" aria-label="Search the menu">
+  <div id="menu"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <h2>Visit or contact us</h2>
+    <p id="addr"></p>
+    <p id="hours"></p>
+    <div class="quick" id="fQuick"></div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-label="Item photo"><div id="lbc"></div></div>
+
+<script>
+/* ============ EDIT THIS SECTION ============ */
+const SHOP = {
+  name: "Your Shop Name",
+  subtitle: "Fresh · Handmade · Daily",
+  tagline: "Made fresh every day. Choose a category, or search for a dish.",
+  hours: "Sunday – Thursday 11am – 11pm  |  Friday & Saturday 11am – 12am",
+  address: "Main Street, Nablus",
+  phone: "+970 59 000 0000",
+  whatsapp: "970590000000",   // country code + number, no + or spaces
+  instagram: "",             // full link, or leave empty
+  mapsLink: "",              // Google Maps link, or leave empty
+  currency: "₪"
+};
+
+// image: path/URL of a photo, e.g. "img/kunafa.jpg". Leave "" to show the emoji.
+const CATS = [
+  {name:"Starters", emoji:"🥗", image:""},
+  {name:"Mains",    emoji:"🍱", image:""},
+  {name:"Desserts", emoji:"🍮", image:""},
+  {name:"Drinks",   emoji:"🍵", image:""}
+];
+const ITEMS = [
+  {cat:"Starters", name:"Hummus Plate",     desc:"Creamy chickpeas, olive oil, warm bread.",   price:14, emoji:"🥙", image:""},
+  {cat:"Starters", name:"Fattoush Salad",   desc:"Crisp vegetables, sumac, toasted bread.",     price:18, emoji:"🥗", image:""},
+  {cat:"Mains",    name:"Chicken Shawarma", desc:"Marinated chicken, garlic sauce, pickles.",   price:25, emoji:"🌯", image:"", tag:"Popular"},
+  {cat:"Mains",    name:"Beef Burger",      desc:"Grilled patty, cheese, fries on the side.",   price:32, emoji:"🍔", image:""},
+  {cat:"Mains",    name:"Margherita Pizza", desc:"Tomato, mozzarella, fresh basil.",            price:35, emoji:"🍕", image:""},
+  {cat:"Desserts", name:"Kunafa",           desc:"Hot, cheesy and soaked in syrup.",            price:16, emoji:"🍮", image:"", tag:"Local favorite"},
+  {cat:"Drinks",   name:"Fresh Lemonade",   desc:"Lemon and mint, served cold.",                price:10, emoji:"🍋", image:""},
+  {cat:"Drinks",   name:"Arabic Coffee",    desc:"Cardamom coffee, small cup.",                 price:7,  emoji:"☕", image:""}
+];
+/* ============ END OF EDIT SECTION ============ */
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let active = "All";
+
+document.title = SHOP.name + " – Menu";
+$("#sName").textContent = SHOP.name.toUpperCase().split("").join(" ").replace(/ {3,}/g," ");
+$("#sName").style.letterSpacing = ".3em";
+$("#sSub").textContent = SHOP.subtitle;
+$("#biz").textContent = SHOP.name;
+$("#tagline").textContent = SHOP.tagline;
+$("#addr").textContent = SHOP.address;
+$("#hours").textContent = SHOP.hours;
+
+const link = (href, label, solid) => href ? `<a class="btn ${solid ? "solid" : ""}" href="${esc(href)}" target="_blank" rel="noopener">${label}</a>` : "";
+const buttons =
+  link(SHOP.phone && "tel:" + SHOP.phone.replace(/\s/g, ""), "Call", true) +
+  link(SHOP.whatsapp && "https://wa.me/" + SHOP.whatsapp, "WhatsApp") +
+  link(SHOP.mapsLink, "Directions") +
+  link(SHOP.instagram, "Instagram");
+$("#sQuick").innerHTML = buttons;
+$("#fQuick").innerHTML = buttons;
+
+function enter(){ $("#splash").classList.add("gone"); document.body.classList.remove("lock"); }
+$("#enter").addEventListener("click", enter);
+
+function renderTiles(){
+  $("#tiles").innerHTML = CATS.map(c => `
+    <button class="tile" data-c="${esc(c.name)}" aria-pressed="${active === c.name}"
+      ${c.image ? `style="background-image:url('${esc(c.image)}')"` : ""}>
+      ${c.image ? "" : `<div class="em">${esc(c.emoji || "🍽️")}</div>`}
+      <span class="l">${esc(c.name)}</span>
+    </button>`).join("");
+}
+
+function render(){
+  const term = $("#q").value.trim().toLowerCase();
+  const list = ITEMS.filter(i =>
+    (active === "All" || i.cat === active) &&
+    (!term || (i.name + " " + i.desc + " " + i.cat).toLowerCase().includes(term)));
+  if(!list.length){ $("#menu").innerHTML = `<p class="empty">Nothing matches your search. Try another word.</p>`; return; }
+  const shown = CATS.map(c => c.name).filter(c => list.some(i => i.cat === c));
+  $("#menu").innerHTML = shown.map(c => `
+    <section class="cat">
+      <h2>${esc(c)}</h2>
+      ${list.filter(i => i.cat === c).map(i => `
+        <article class="item">
+          <button class="thumb" data-n="${ITEMS.indexOf(i)}" aria-label="View photo of ${esc(i.name)}">
+            ${i.image ? `<img src="${esc(i.image)}" alt="" loading="lazy">` : esc(i.emoji || "🍽️")}
+          </button>
+          <div class="txt">
+            <div class="row"><span class="name">${esc(i.name)}</span><span class="price">${esc(SHOP.currency)}${esc(i.price)}</span></div>
+            <p class="desc">${esc(i.desc)}</p>
+            ${i.tag ? `<span class="tag">${esc(i.tag)}</span>` : ""}
+          </div>
+        </article>`).join("")}
+    </section>`).join("");
+}
+
+$("#tiles").addEventListener("click", e => {
+  const t = e.target.closest(".tile"); if(!t) return;
+  active = active === t.dataset.c ? "All" : t.dataset.c;   // tap again to show everything
+  renderTiles(); render();
+  $("#menu").scrollIntoView({behavior:"smooth", block:"start"});
+});
+$("#q").addEventListener("input", render);
+
+$("#menu").addEventListener("click", e => {
+  const t = e.target.closest(".thumb"); if(!t) return;
+  const i = ITEMS[t.dataset.n];
+  $("#lbc").innerHTML = (i.image ? `<img src="${esc(i.image)}" alt="${esc(i.name)}">` : `<div class="big">${esc(i.emoji || "🍽️")}</div>`)
+    + `<h3 style="margin-top:12px;font-size:1.6rem">${esc(i.name)} · ${esc(SHOP.currency)}${esc(i.price)}</h3>`;
+  $("#lb").classList.add("open");
+});
+$("#lb").addEventListener("click", () => $("#lb").classList.remove("open"));
+document.addEventListener("keydown", e => { if(e.key === "Escape") $("#lb").classList.remove("open"); });
+
+renderTiles(); render();
+</script>
 </body>
 </html>
