@@ -17,7 +17,7 @@ h1,h2,h3,.price{font-family:"Cormorant Garamond",Cairo,Georgia,serif;font-weight
 .wrap{max-width:900px;margin:0 auto;padding:0 20px}
 
 /* splash */
-#splash{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .7s,visibility .7s}
+#splash{position:fixed;inset:0;z-index:50;background:linear-gradient(rgba(14,17,23,.55),rgba(14,17,23,.85)),var(--bg) url(img/bread.jpg) center/cover no-repeat;text-shadow:0 2px 14px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity .7s,visibility .7s}
 #splash.gone{opacity:0;visibility:hidden}
 #splash .mark{font-family:Cairo,"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2rem,9vw,3.8rem);letter-spacing:0;line-height:1.4;animation:rise 1.2s ease both}
 #splash .sub{color:var(--gold);letter-spacing:.3em;font-size:.8rem;margin:14px -.3em 34px 0;animation:rise 1.2s .25s ease both}
@@ -29,9 +29,9 @@ h1,h2,h3,.price{font-family:"Cormorant Garamond",Cairo,Georgia,serif;font-weight
 #enter{margin-top:30px;border:0;border-bottom:1px solid var(--muted);color:var(--muted);padding:6px 2px;animation:rise 1.2s .75s ease both}
 
 /* hero */
-.hero{padding:70px 0 40px;text-align:center}
+.hero{padding:70px 0 50px;text-align:center;background:linear-gradient(rgba(22,26,34,.6),var(--bg)),url(img/bread.jpeg) center/cover no-repeat;border-bottom:1px solid var(--line);text-shadow:0 2px 14px rgba(0,0,0,.6)}
 .hero h1{font-size:clamp(2.4rem,8vw,4.2rem);line-height:1.05}
-.hero p{max-width:50ch;margin:16px auto 0;color:var(--muted)}
+.hero p{max-width:50ch;margin:16px auto 0;color:var(--ink);opacity:.9}
 
 /* category tiles */
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;padding:10px 0 20px}
@@ -77,9 +77,11 @@ footer .quick{margin-top:22px}
   <button class="btn" id="enter">View menu</button>
 </div>
 
-<header class="hero wrap">
-  <h1 id="biz"></h1>
-  <p id="tagline"></p>
+<header class="hero">
+  <div class="wrap">
+    <h1 id="biz"></h1>
+    <p id="tagline"></p>
+  </div>
 </header>
 
 <main class="wrap" id="top">
