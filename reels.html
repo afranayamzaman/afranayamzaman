@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Afran Ayam Zaman | Reels</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#0e1117;color:#efeae0;font-family:Jost,Cairo,system-ui,sans-serif}
+:focus-visible{outline:2px solid #c9b27c;outline-offset:3px}
+#feed{height:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none}
+#feed::-webkit-scrollbar{display:none}
+.reel{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:#161a22 url(img/bread.jpg) center/cover no-repeat}
+.reel video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shade{position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(8,10,14,.88));pointer-events:none}
+.info{position:absolute;left:0;right:76px;bottom:0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.cat{font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:#c9b27c}
+.ar{text-align:left;font:700 clamp(1.7rem,7vw,2.3rem)/1.35 Cairo,sans-serif}
+.en{font-size:1.05rem;opacity:.9}
+.desc{margin-top:6px;font-size:.92rem;opacity:.85;max-width:34ch}
+.price{display:inline-block;margin-top:10px;background:#c9b27c;color:#161a22;font-weight:500;padding:4px 14px;border-radius:99px}
+.side{position:absolute;right:12px;bottom:calc(30px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px;align-items:center}
+.ab{width:52px;height:52px;border-radius:50%;border:0;background:rgba(14,17,23,.62);backdrop-filter:blur(6px);color:#fff;font-size:1.35rem;cursor:pointer;display:grid;place-items:center;text-decoration:none}
+.ab.go{background:#25a55f}
+.top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:calc(12px + env(safe-area-inset-top)) 14px 12px;background:linear-gradient(rgba(8,10,14,.7),transparent)}
+.top a,.top button{color:#fff;text-decoration:none;font:500 .9rem Jost,sans-serif;background:rgba(14,17,23,.55);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:7px 14px;cursor:pointer}
+.dots{position:fixed;left:8px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:6px}
+.dots i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4)}
+.dots i.on{background:#c9b27c;height:16px;border-radius:4px}
+@media(min-width:700px){#feed{max-width:440px;margin:0 auto}.top{max-width:440px;margin:0 auto}}
+@media(prefers-reduced-motion:reduce){#feed{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="top">
+  <a href="index.html">← Menu</a>
+  <button id="mute" aria-label="Turn sound on or off">🔇 Sound off</button>
+</div>
+<div class="dots" id="dots" aria-hidden="true"></div>
+<div id="feed"></div>
+
+<script>
+/* ============ EDIT THIS SECTION ============ */
+const SHOP = {
+  nameEn: "Afran Ayam Zaman",
+  phone: "+970 59 000 0000",
+  whatsapp: "970590000000",   // country code + number, no + or spaces
+  currency: "₪"
+};
+
+// video: file inside the "videos" folder (vertical, 8–15 sec, under ~5 MB, .mp4).
+// If the file is missing, the bread photo is shown instead.
+const REELS = [
+  {video:"videos/zaatar.mp4",  cat:"Wood-fired", ar:"مناقيش زعتر",  en:"Zaatar Manousheh",  desc:"Fresh dough, zaatar and olive oil from the fire.", price:8},
+  {video:"videos/cheese.mp4",  cat:"Wood-fired", ar:"مناقيش جبنة",  en:"Cheese Manousheh",  desc:"Melted cheese on hot wood-baked bread.",          price:12},
+  {video:"videos/bread.mp4",   cat:"Fresh bread", ar:"خبز على الحطب", en:"Wood-Fired Bread",  desc:"Straight out of the oven, still puffed.",         price:5},
+  {video:"videos/special.mp4", cat:"Today's special", ar:"طبق اليوم", en:"Today's Special",   desc:"Ask us what came out of the oven today.",         price:20}
+];
+/* ============ END OF EDIT SECTION ============ */
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let muted = true;
+
+$("#feed").innerHTML = REELS.map((r, n) => `
+  <section class="reel" data-n="${n}" aria-label="${esc(r.en)}">
+    <video data-src="${esc(r.video)}" muted loop playsinline preload="none" poster="img/bread.jpg"></video>
+    <div class="shade"></div>
+    <div class="info">
+      <div class="cat">${esc(r.cat)}</div>
+      <div class="ar" dir="rtl" lang="ar">${esc(r.ar)}</div>
+      <div class="en">${esc(r.en)}</div>
+      <p class="desc">${esc(r.desc)}</p>
+      <span class="price">${esc(SHOP.currency)}${esc(r.price)}</span>
+    </div>
+    <div class="side">
+      <a class="ab go" aria-label="Order on WhatsApp" target="_blank" rel="noopener"
+         href="https://wa.me/${esc(SHOP.whatsapp)}?text=${encodeURIComponent("Hello, I would like to order: " + r.en + " (" + r.ar + ")")}">💬</a>
+      <a class="ab" aria-label="Call us" href="tel:${esc(SHOP.phone.replace(/\s/g, ""))}">📞</a>
+      <button class="ab" data-share="${n}" aria-label="Share this dish">↗</button>
+    </div>
+  </section>`).join("");
+
+$("#dots").innerHTML = REELS.map((_, n) => `<i data-d="${n}"></i>`).join("");
+
+function setDot(n){ document.querySelectorAll("#dots i").forEach((d, i) => d.classList.toggle("on", i === n)); }
+
+// Play only the reel on screen; load videos only when they come near the screen
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const v = e.target.querySelector("video");
+    if(e.isIntersecting){
+      if(!v.src) v.src = v.dataset.src;
+      v.muted = muted;
+      v.play().catch(() => {});
+      setDot(+e.target.dataset.n);
+    } else v.pause();
+  });
+}, {root: $("#feed"), threshold: .6});
+document.querySelectorAll(".reel").forEach(r => io.observe(r));
+
+// Preload the next video so scrolling feels smooth
+const pre = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ const v = e.target.querySelector("video"); if(!v.src) v.src = v.dataset.src; } });
+}, {root: $("#feed"), rootMargin: "100% 0px"});
+document.querySelectorAll(".reel").forEach(r => pre.observe(r));
+
+// Tap a video to pause or play
+$("#feed").addEventListener("click", e => {
+  if(e.target.closest(".ab")) return;
+  const v = e.target.closest(".reel")?.querySelector("video"); if(!v) return;
+  v.paused ? v.play().catch(() => {}) : v.pause();
+});
+
+// Sound button (browsers require a tap before sound can play)
+$("#mute").addEventListener("click", () => {
+  muted = !muted;
+  document.querySelectorAll("video").forEach(v => v.muted = muted);
+  $("#mute").textContent = muted ? "🔇 Sound off" : "🔊 Sound on";
+});
+
+// Share button
+$("#feed").addEventListener("click", async e => {
+  const b = e.target.closest("[data-share]"); if(!b) return;
+  const r = REELS[b.dataset.share];
+  const data = {title: SHOP.nameEn, text: r.en + " – " + r.ar, url: location.href};
+  try{ navigator.share ? await navigator.share(data) : await navigator.clipboard.writeText(location.href); }catch(_){}
+});
+</script>
+</body>
+</html>
