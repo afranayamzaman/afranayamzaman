@@ -49,13 +49,17 @@ const SHOP = {
   currency: "₪"
 };
 
-// video: file inside the "videos" folder (vertical, 8–15 sec, under ~5 MB, .mp4).
+// video: exact file name of the video (vertical, 8–15 sec, .mp4).
 // If the file is missing, the bread photo is shown instead.
+// Where the video files are. "" = same place as reels.html (right now).
+// After you move them into a folder, change it to "videos/"
+const VIDEO_DIR = "";
+
 const REELS = [
-  {video:"videos/zaatar.mp4",  cat:"Wood-fired", ar:"مناقيش زعتر",  en:"Zaatar Manousheh",  desc:"Fresh dough, zaatar and olive oil from the fire.", price:8},
-  {video:"videos/cheese.mp4",  cat:"Wood-fired", ar:"مناقيش جبنة",  en:"Cheese Manousheh",  desc:"Melted cheese on hot wood-baked bread.",          price:12},
-  {video:"videos/bread.mp4",   cat:"Fresh bread", ar:"خبز على الحطب", en:"Wood-Fired Bread",  desc:"Straight out of the oven, still puffed.",         price:5},
-  {video:"videos/special.mp4", cat:"Today's special", ar:"طبق اليوم", en:"Today's Special",   desc:"Ask us what came out of the oven today.",         price:20}
+  {video:"VID_20260604_232955.mp4",  cat:"Wood-fired", ar:"مناقيش زعتر",  en:"Zaatar Manousheh",  desc:"Fresh dough, zaatar and olive oil from the fire.", price:8},
+  {video:"VID_20260604_233107.mp4",  cat:"Wood-fired", ar:"مناقيش جبنة",  en:"Cheese Manousheh",  desc:"Melted cheese on hot wood-baked bread.",          price:12},
+  {video:"VID-20260606-WA0072.mp4",   cat:"Fresh bread", ar:"خبز على الحطب", en:"Wood-Fired Bread",  desc:"Straight out of the oven, still puffed.",         price:5},
+  {video:"VID-20250705-WA0144.mp4", cat:"Today's special", ar:"طبق اليوم", en:"Today's Special",   desc:"Ask us what came out of the oven today.",         price:20}
 ];
 /* ============ END OF EDIT SECTION ============ */
 
@@ -65,7 +69,7 @@ let muted = true;
 
 $("#feed").innerHTML = REELS.map((r, n) => `
   <section class="reel" data-n="${n}" aria-label="${esc(r.en)}">
-    <video data-src="${esc(r.video)}" muted loop playsinline preload="none" poster="img/bread.jpg"></video>
+    <video data-src="${esc(VIDEO_DIR + r.video)}" muted loop playsinline preload="none" poster="img/bread.jpg"></video>
     <div class="shade"></div>
     <div class="info">
       <div class="cat">${esc(r.cat)}</div>
